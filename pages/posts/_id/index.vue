@@ -22,11 +22,14 @@
 import { loadPost } from "@/api/posts";
 export default {
   asyncData: async context => {
-    const loadedPost = await loadPost(context);
-    if (!loadedPost) return new Error();
-    return {
-      loadedPost
-    };
+    try {
+      const loadedPost = await loadPost(context);
+      return {
+        loadedPost
+      };
+    } catch (e) {
+      new Error(e);
+    }
   }
 };
 </script>

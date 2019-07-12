@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { Stream } from "stream";
 export default {
   name: "PostPreview",
   props: {
