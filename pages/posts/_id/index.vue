@@ -1,12 +1,12 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the Post</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <span class="post-detail">Last updated on xxx</span>
-        <span class="post-detail">Written by name</span>
+        <span class="post-detail">Last updsted on "{{ loadedPost.updatedDate }}"</span>
+        <span class="post-detail">Written by {{ loadedPost.author }}</span>
       </div>
-      <p>Content of the post</p>
+      <p>{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
       <p>
@@ -18,6 +18,19 @@
     </section>
   </div>
 </template>
+<script>
+import { loadPost } from "@/api/posts";
+export default {
+  asyncData: async context => {
+    const loadedPost = await loadPost(context);
+    if (!loadedPost) return new Error();
+    return {
+      loadedPost
+    };
+  }
+};
+</script>
+
 <style scoped>
 .single-post-page {
   padding: 30px;
