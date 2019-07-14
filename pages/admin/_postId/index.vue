@@ -13,7 +13,6 @@ export default {
   components: {
     AdminPostForm
   },
-
   data() {
     return {
       loadedPost: {

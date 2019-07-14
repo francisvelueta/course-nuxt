@@ -3,15 +3,25 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <PostList />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
 import PostList from "@/components/Posts/PostList";
+
+import { loadPosts } from "@/api/posts";
 export default {
   components: {
     PostList
+  },
+  // Asyncdata (need it asynchronous data)with async await
+  asyncData: async context => {
+    const loadedPosts = await loadPosts();
+    if (!loadedPosts) return new Error();
+    return {
+      loadedPosts
+    };
   }
 };
 </script>
