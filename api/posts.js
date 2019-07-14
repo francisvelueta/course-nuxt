@@ -1,7 +1,7 @@
 export const loadPosts = () => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve([
+      resolve(
         {
           id: '1',
           title: 'First Post',
@@ -23,7 +23,7 @@ export const loadPosts = () => {
           thumbnail:
             'https://www.muycomputerpro.com/wp-content/uploads/2014/10/desarrollo_software.jpg'
         }
-      ])
+      )
     }, 1500)
   })
 }

@@ -4,23 +4,27 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import PostList from "@/components/Posts/PostList";
-
-import { loadPosts } from "@/api/posts";
 
 export default {
   components: {
     PostList
   },
   // Asyncdata (need it asynchronous data)with async await
-  asyncData: async context => {
-    const loadedPosts = await loadPosts();
-    if (!loadedPosts) return new Error();
-    return {
-      loadedPosts
-    };
+  fetch: async context => {
+    // if (context.store.state.posts["posts/loadedPosts"] > 0) return null;
   },
-  created() {}
+  computed: {
+    loadedPosts() {
+      return this.$store.getters["posts/loadedPosts"];
+    }
+  }
+  // created() {
+  //   // to get getters from store is [posts/loadedPosts] the path from js action
+  //     this.$store.dispatch("posts/setPosts", this.loadedPosts);
+  //   console.log(this.$store.getters["posts/loadedPosts"]);
+  // }
 };
 </script>
 
