@@ -36,25 +36,17 @@ export const actions = {
         ...post,
         updatedDate: new Date()
       }
-      const response = await axios.post(
-        'https://school-bus-app-96816.firebaseio.com/posts.json',
-        createdPost
-      )
-      if (!response) throw new Error()
-      vxContext.commit('addPost', { ...createdPost, id: response.data.name })
+      const data = await this.$axios.$post(`/posts.json`, createdPost)
+      if (!data) throw new Error()
+      vxContext.commit('addPost', { ...createdPost, id: data.name })
     } catch (e) {
       new Error(e)
     }
   },
   editPost(vxContext, editedPost) {
-    return axios
-      .put(
-        `https://school-bus-app-96816.firebaseio.com/posts/${
-          editedPost.id
-        }.json`,
-        editedPost
-      )
-      .then(res => {
+    return this.$axios
+      .$put(`/posts/${editedPost.id}.json`, editedPost)
+      .then(data => {
         vxContext.commit('editPost', editedPost)
       })
       .catch(e => console.log(e))
