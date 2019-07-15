@@ -10,14 +10,8 @@
   </div>
 </template>
 <script>
-import PostList from "@/components/Posts/PostList";
-import AppButton from "@/components/UI/AppButton";
 export default {
   layout: "admin",
-  components: {
-    PostList,
-    AppButton
-  },
   // Asyncdata (need it asynchronous data)with async await
   computed: {
     loadedPosts() {

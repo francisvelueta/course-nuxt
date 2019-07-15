@@ -8,14 +8,7 @@
 </template>
 
 <script>
-import PostList from "@/components/Posts/PostList";
-
-import { loadPosts } from "@/api/posts";
 export default {
-  components: {
-    PostList
-  },
-  // Asyncdata (need it asynchronous data)with async await
   computed: {
     loadedPosts() {
       return this.$store.getters["posts/loadedPosts"];
