@@ -15,17 +15,10 @@ export default {
     AdminPostForm
   },
   methods: {
-    async onSubmitted(postData) {
-      try {
-        const response = await axios.post(
-          "https://school-bus-app-96816.firebaseio.com/posts.json",
-          { ...postData, updatedDate: new Date() }
-        );
-        if (!response) throw new Error();
-        console.log(response);
-      } catch (e) {
-        new Error(e);
-      }
+    onSubmitted(postData) {
+      this.$store
+        .dispatch("posts/addPost", postData)
+        .then(() => this.$router.push("/admin"));
     }
   }
 };

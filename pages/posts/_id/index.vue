@@ -20,7 +20,6 @@
 </template>
 <script>
 import axios from "axios";
-import { loadPost } from "@/api/posts";
 export default {
   asyncData: context => {
     return axios
