@@ -37,7 +37,7 @@ export const actions = {
         updatedDate: new Date()
       }
       const response = await axios.post(
-        'https://school-bus-app-96816.firebaseio.com/posts.json',
+        `${process.env.baseUrl}/posts.json`,
         createdPost
       )
       if (!response) throw new Error()
@@ -48,12 +48,7 @@ export const actions = {
   },
   editPost(vxContext, editedPost) {
     return axios
-      .put(
-        `https://school-bus-app-96816.firebaseio.com/posts/${
-          editedPost.id
-        }.json`,
-        editedPost
-      )
+      .put(`${process.env.baseUrl}/posts/${editedPost.id}.json`, editedPost)
       .then(res => {
         vxContext.commit('editPost', editedPost)
       })

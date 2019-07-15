@@ -23,11 +23,12 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#fa923f', height: '4px', duration: 5000 },
+
   /*
    ** Global CSS
    */
-  css: ['~/assets/styles/main.css'],
+  css: ['~assets/styles/main.css'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -44,5 +45,15 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  // enviroment variables
+  env: {
+    baseUrl:
+      process.env.BASE_URL || 'https://school-bus-app-96816.firebaseio.com'
+  },
+  // transition is deprecated
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in'
   }
 }
