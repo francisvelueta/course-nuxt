@@ -16,12 +16,16 @@ export default {
   },
   methods: {
     async onSubmitted(postData) {
-      const response = await axios.post(
-        "https://school-bus-app-96816.firebaseio.com/posts.json",
-        postData
-      );
-      if (!response) throw new Error();
-      console.log(response);
+      try {
+        const response = await axios.post(
+          "https://school-bus-app-96816.firebaseio.com/posts.json",
+          postData
+        );
+        if (!response) throw new Error();
+        console.log(response);
+      } catch (e) {
+        new Error(e);
+      }
     }
   }
 };
