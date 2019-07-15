@@ -1,12 +1,11 @@
-import axios from 'axios'
 export const actions = {
   nuxtServerInit(vxContext, context) {
-    return axios
-      .get(`${process.env.baseUrl}/posts.json`)
-      .then(res => {
+    return context.app.$axios
+      .$get(`/posts.json`)
+      .then(data => {
         const postsArray = []
-        for (const key in res.data) {
-          postsArray.push({ ...res.data[key], id: key })
+        for (const key in data) {
+          postsArray.push({ ...data[key], id: key })
         }
         vxContext.commit('posts/setPosts', postsArray)
       })

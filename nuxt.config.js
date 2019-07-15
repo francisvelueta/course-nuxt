@@ -32,11 +32,16 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~plugins/core-components.js'],
+  plugins: ['~plugins/core-components.js', '~plugins/date-filter.js'],
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/axios'],
+  axios: {
+    baseURL:
+      process.env.BASE_URL || 'https://school-bus-app-96816.firebaseio.com',
+    credentials: false
+  },
   /*
    ** Build configuration
    */
