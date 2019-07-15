@@ -16,12 +16,10 @@ export default {
     PostList
   },
   // Asyncdata (need it asynchronous data)with async await
-  asyncData: async context => {
-    const loadedPosts = await loadPosts();
-    if (!loadedPosts) return new Error();
-    return {
-      loadedPosts
-    };
+  computed: {
+    loadedPosts() {
+      return this.$store.getters["posts/loadedPosts"];
+    }
   }
 };
 </script>

@@ -19,17 +19,19 @@
   </div>
 </template>
 <script>
-import { loadPost } from "@/api/posts";
+import axios from "axios";
 export default {
-  asyncData: async context => {
-    try {
-      const loadedPost = await loadPost(context);
-      return {
-        loadedPost
-      };
-    } catch (e) {
-      new Error(e);
-    }
+  asyncData: context => {
+    return axios
+      .get(
+        `https://school-bus-app-96816.firebaseio.com/posts/${context.params.id}.json`
+      )
+      .then(res => {
+        return {
+          loadedPost: res.data
+        };
+      })
+      .catch(e => context.error(e));
   }
 };
 </script>

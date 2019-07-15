@@ -5,7 +5,7 @@
     </section>
     <section class="existing-posts">
       <h1>Existing Posts</h1>
-      <PostList isAdmin />
+      <PostList isAdmin :posts="loadedPosts" />
     </section>
   </div>
 </template>
@@ -17,6 +17,12 @@ export default {
   components: {
     PostList,
     AppButton
+  },
+  // Asyncdata (need it asynchronous data)with async await
+  computed: {
+    loadedPosts() {
+      return this.$store.getters["posts/loadedPosts"];
+    }
   }
 };
 </script>

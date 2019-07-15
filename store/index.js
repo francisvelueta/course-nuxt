@@ -1,32 +1,16 @@
+import axios from 'axios'
+import { Z_ASCII } from 'zlib'
 export const actions = {
   nuxtServerInit(vxContext, context) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        vxContext.commit('posts/setPosts', [
-          {
-            id: '1',
-            title: 'First Post',
-            previewText: 'This is our firts post',
-            thumbnail:
-              'https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/4zx2oCU_lijl3z600/videoblocks-hackers-program-code-running-on-screen-4k_bwxci_4l_thumbnail-full01.png'
-          },
-          {
-            id: '2',
-            title: 'Second Post',
-            previewText: 'This is our second post',
-            thumbnail:
-              'https://concepto.de/wp-content/uploads/2015/03/software-1-e1550080097569.jpg'
-          },
-          {
-            id: '3',
-            title: 'Third Post',
-            previewText: 'This is our third post',
-            thumbnail:
-              'https://www.muycomputerpro.com/wp-content/uploads/2014/10/desarrollo_software.jpg'
-          }
-        ])
-        resolve()
-      }, 1500)
-    })
+    return axios
+      .get('https://school-bus-app-96816.firebaseio.com/posts.json')
+      .then(res => {
+        const postsArray = []
+        for (const key in res.data) {
+          postsArray.push({ ...res.data[key], id: key })
+        }
+        vxContext.commit('posts/setPosts', postsArray)
+      })
+      .catch(e => context.error(e))
   }
 }
