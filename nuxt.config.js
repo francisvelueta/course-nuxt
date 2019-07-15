@@ -54,7 +54,8 @@ export default {
   // enviroment variables
   env: {
     baseUrl:
-      process.env.BASE_URL || 'https://school-bus-app-96816.firebaseio.com'
+      process.env.BASE_URL || 'https://school-bus-app-96816.firebaseio.com',
+    fbApiKey: 'AIzaSyACSAcbXPV35d_foAOsPK7QBjucZFeTVJ4'
   },
   // transition is deprecated
   pageTransition: {
