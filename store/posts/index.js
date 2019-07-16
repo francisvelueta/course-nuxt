@@ -1,4 +1,3 @@
-import axios from 'axios'
 export const state = () => ({
   loadedPosts: []
 })
@@ -29,6 +28,7 @@ export const actions = {
   setPosts(vxContext, posts) {
     // vxContext commit receive an action and payload(posts)
     vxContext.commit('setPosts', posts)
+    const token = vxContext.rootGetters['auth/getToken']
   },
   async addPost(vxContext, post) {
     try {
@@ -36,7 +36,10 @@ export const actions = {
         ...post,
         updatedDate: new Date()
       }
-      const data = await this.$axios.$post(`/posts.json`, createdPost)
+      const data = await this.$axios.$post(
+        `/posts.json?auth=${token}`,
+        createdPost
+      )
       if (!data) throw new Error()
       vxContext.commit('addPost', { ...createdPost, id: data.name })
     } catch (e) {
@@ -44,8 +47,10 @@ export const actions = {
     }
   },
   editPost(vxContext, editedPost) {
+    const token = vxContext.rootGetters['auth/getToken']
+
     return this.$axios
-      .$put(`/posts/${editedPost.id}.json`, editedPost)
+      .$put(`/posts/${editedPost.id}.json?auth=${token}`, editedPost)
       .then(data => {
         vxContext.commit('editPost', editedPost)
       })
