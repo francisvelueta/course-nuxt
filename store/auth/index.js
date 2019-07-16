@@ -2,7 +2,11 @@ export const state = () => ({
   token: null
 })
 
-export const getters = {}
+export const getters = {
+  getToken(state) {
+    return state.token
+  }
+}
 
 export const mutations = {
   setToken(state, token) {
@@ -12,6 +16,7 @@ export const mutations = {
 
 export const actions = {
   authenticateUser(vxContext, authData) {
+    console.log(vxContext)
     let authUrl = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
       process.env.fbApiKey
     }`

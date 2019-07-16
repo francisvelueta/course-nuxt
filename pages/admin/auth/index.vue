@@ -35,7 +35,7 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(() => {
+        .then(data => {
           this.$router.push("/admin");
         })
         .catch(e => console.log(e));
