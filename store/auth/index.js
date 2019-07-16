@@ -42,19 +42,15 @@ export const actions = {
         localStorage.setItem('token', res.idToken)
         localStorage.setItem(
           'tokenExpiration',
-          new Date().getTime() + res.expiresIn * 1000
+          new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
         )
         Cookie.set('jwt', res.idToken)
-        Cookie.set('expirationDate', res.expiresIn * 1000)
-        vxContext.dispatch('setLogoutTimer', res.expiresIn * 1000)
+        Cookie.set(
+          'expirationDate',
+          new Date().getTime() + Number.parseInt(res.expiresIn) * 1000
+        )
       })
       .catch(e => console.log(e))
-  },
-
-  setLogoutTimer(vxContext, duration) {
-    setTimeout(() => {
-      vxContext.commit('clearToken')
-    }, duration)
   },
   initAuth(vxContext, req) {
     let token
@@ -77,11 +73,21 @@ export const actions = {
     } else {
       token = localStorage.getItem('token')
       expirationDate = localStorage.getItem('tokenExpiration')
-      if (new Date().getTime() > +expirationDate || !token) {
-        return
-      }
     }
-    vxContext.dispatch('setLogoutTimer', +expirationDate - new Date().getTime())
+    if (new Date().getTime() > +expirationDate || !token) {
+      console.log('No token or invalid token')
+      vxContext.commit('clearToken')
+      vxContext.dispatch('logout')
+    }
     vxContext.commit('setToken', token)
+  },
+  logout(vxContext) {
+    vxContext.commit('clearToken')
+    Cookie.remove('jwt')
+    Cookie.remove('expirationDate')
+    if (process.client) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('tokenExpiration')
+    }
   }
 }
