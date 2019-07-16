@@ -14,12 +14,14 @@ export const getters = {
 export const mutations = {
   setToken(state, token) {
     state.token = token
+  },
+  clearToken(state) {
+    return (state.token = null)
   }
 }
 
 export const actions = {
   authenticateUser(vxContext, authData) {
-    console.log(vxContext)
     let authUrl = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
       process.env.fbApiKey
     }`
@@ -36,7 +38,28 @@ export const actions = {
       })
       .then(res => {
         vxContext.commit('setToken', res.idToken)
+        localStorage.setItem('token', res.idToken)
+        localStorage.setItem(
+          'tokenExpiration',
+          new Date().getTime() + res.expiresIn * 1000
+        )
+        vxContext.dispatch('setLogoutTimer', res.expiresIn * 1000)
       })
       .catch(e => console.log(e))
+  },
+
+  setLogoutTimer(vxContext, duration) {
+    setTimeout(() => {
+      vxContext.commit('clearToken')
+    }, duration)
+  },
+  initAuth(vxContext) {
+    const token = localStorage.getItem('token')
+    const expirationDate = localStorage.getItem('tokenExpiration')
+    if (new Date().getTime() > +expirationDate || !token) {
+      return
+    }
+    vxContext.dispatch('setLogoutTimer', +expirationDate - new Date().getTime())
+    vxContext.commit('setToken', token)
   }
 }

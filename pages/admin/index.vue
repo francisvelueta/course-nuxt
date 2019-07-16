@@ -12,7 +12,7 @@
 <script>
 export default {
   layout: "admin",
-  middleware: "auth",
+  middleware: ["check-auth", "auth"],
   // Asyncdata (need it asynchronous data)with async await
   computed: {
     loadedPosts() {
